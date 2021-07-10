@@ -14,11 +14,10 @@
         content="bootstrap admin template,admin template,admin dashboard,admin dashboard template,admin,dashboard,bootstrap,template">
     <meta name="author" content="Flatlogic LLC">
     <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script>
-        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
-           chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
-                      https://code.google.com/p/chromium/issues/detail?id=332189
-        */
+
     </script>
 </head>
 
@@ -27,75 +26,7 @@
         <h4><a href="index.html">Light <strong>Blue</strong></a></h4>
     </div>
     <nav id="sidebar" class="sidebar nav-collapse collapse">
-        <ul id="side-nav" class="side-nav">
-            <li class="active">
-                <a href="index.html"><i class="fa fa-home"></i> <span class="name">Dashboard</span></a>
-            </li>
-            <li class="">
-                <a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
-            </li>
-            <li class="">
-                <a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
-            </li>
-            <li class="">
-                <a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a></li>
-            </li>
-            <li class="panel ">
-                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav"
-                    href="#elements-collapse"><i class="fa fa-magic"></i> <span class="name">Elements</span></a>
-                <ul id="elements-collapse" class="panel-collapse collapse ">
-                    <li class=""><a href="charts.html">Charts</a></li>
-                    <li class=""><a href="icons.html">Icons</a></li>
-                    <li class=""><a href="maps.html" data-no-pjax>Maps</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <h5 class="sidebar-nav-title">Labels <a class="action-link" href="#"><i
-                    class="glyphicon glyphicon-plus"></i></a></h5>
-        <!-- some styled links in sidebar. ready to use as links to email folders, projects, groups, etc -->
-        <ul class="sidebar-labels">
-            <li>
-                <a href="#">
-                    <!-- yep, .circle again -->
-                    <i class="fa fa-circle text-success"></i>
-                    <span class="label-name">My Recent</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle text-primary"></i>
-                    <span class="label-name">Starred</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle text-danger"></i>
-                    <span class="label-name">Background</span>
-                </a>
-            </li>
-        </ul>
-
-        <h5 class="sidebar-nav-title">Projects</h5>
-        <!-- A place for sidebar notifications & alerts -->
-        <div class="sidebar-alerts">
-            <div class="alert fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
-                <span class="text-white fw-semi-bold">Sales Report</span> <br>
-                <div class="progress progress-xs mt-xs mb-0">
-                    <div class="progress-bar progress-bar-gray-light" style="width: 16%"></div>
-                </div>
-                <small>Calculating x-axis bias... 65%</small>
-            </div>
-            <div class="alert fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
-                <span class="text-white fw-semi-bold">Personal Responsibility</span> <br>
-                <div class="progress progress-xs mt-xs mb-0">
-                    <div class="progress-bar progress-bar-danger" style="width: 23%"></div>
-                </div>
-                <small>Provide required notes</small>
-            </div>
-        </div>
+        @include('dashboard.include.sidebar')
     </nav>
     <div class="wrap">
         <header class="page-header">
@@ -277,7 +208,7 @@
         </div>
     </div>
     @include('dashboard.include.script')
-
+    @stack('script')
 </body>
 
 </html>
