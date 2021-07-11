@@ -144,7 +144,7 @@
                     <thead>
                     <tr>
                         <th >Defect</th>
-                        <th>Quantity(PCS)</th>
+                        <th class="text-center">Quantity(PCS)</th>
                         <th>Persentase(%)</th>
 
                     </tr>
@@ -321,12 +321,12 @@
                         table.clear().draw();
                         table.rows.add(data['data1']).draw();
 
-                        $('#totalpcs').text(totalpcs)
-                        $('#totaloutputpcs').text(totaloutputpcs)
-                        $('#totaloutput').text("Total Output = "+totaloutputpcs)
-                        $('#totalok').text("Total OK = "+totalok)
-                        $('#totalng').text("Total NG = "+totalng)
-                        $('#totalpersen').text(totalpersen+"%")
+                        $('#totalpcs').text(totalpcs.toLocaleString())
+                        $('#totaloutputpcs').text(totaloutputpcs.toLocaleString())
+                        $('#totaloutput').text("Total Output = "+totaloutputpcs.toLocaleString())
+                        $('#totalok').text("Total OK = "+parseInt(totalok).toLocaleString())
+                        $('#totalng').text("Total NG = "+totalng.toLocaleString())
+                        $('#totalpersen').text(totalpersen.toLocaleString()+"%")
                         $('#output').show();
                         var canvas = document.getElementById('myChart');
                         new Chart(canvas, {

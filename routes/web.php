@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return redirect('defect');
+});
 
 Route::get('/defect/chart','DefectController@chart')->name('defect.chart');
 Route::resource('defect', 'DefectController');

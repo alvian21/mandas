@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title>Light Blue - Responsive Admin Dashboard Template</title>
+    <title>Mandas - Dashboard</title>
 
     <link href="{{asset('assets/css/application.css')}}" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon.png">
