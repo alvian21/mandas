@@ -6,7 +6,7 @@
     .select2-results { background-color: black; }
     .select2-selection__choice__display{background-color: black}
     .myChart{
-        width: 1280px !important;
+        width: 100%;
         height:400px
     }
 
@@ -286,7 +286,7 @@
                     method:"GET",
                     data:form,
                     success:function(data){
-                        console.log(data);
+
                         var defect = []
                         var persen = []
                         var pcs = []
