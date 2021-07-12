@@ -19,7 +19,7 @@
         box-shadow: none;
         }
 </style>
-<h2 class="page-title">Dashboard <small>Statistics and more</small></h2>
+<h2 class="page-title">Dashboard Defect</h2>
 <div class="row">
     <div class="col-md-10">
         <section class="widget">
@@ -355,18 +355,35 @@
                             }]
                         },
                         options: {
+                            legend: {
+                                display: false
+                            },
                             scales: {
                             yAxes: [{
                                 id: 'A',
                                 type: 'linear',
                                 position: 'left',
+                                ticks: {
+                                    fontColor: "white",
+                                    fontSize: 18,
+
+                                }
                             }, {
                                 id: 'B',
                                 type: 'linear',
                                 position: 'right',
                                 ticks: {
                                 max: 100,
-                                min: 0
+                                min: 0,
+                                fontColor: "white",
+                                    fontSize: 18,
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    fontColor: "white",
+                                    fontSize: 14,
+
                                 }
                             }]
                             }
