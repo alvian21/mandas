@@ -1,9 +1,9 @@
 <ul id="side-nav" class="side-nav">
-    <li class="active">
-        <a href="#"><i class="fa fa-home"></i> <span class="name">Dashboard</span></a>
-    </li>
 
-    <li class="">
+    <li class="@yield('review')">
+        <a href="{{route('mpsactual.index')}}"><i class="fa fa-table"></i>MPS VS ACTUAL</a></li>
+    </li>
+    <li class="@yield('defect')">
         <a href="{{route('defect.index')}}"><i class="fa fa-table"></i> DEFECT</a></li>
     </li>
 

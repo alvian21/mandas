@@ -19,3 +19,8 @@ Route::get('/', function () {
 
 Route::get('/defect/chart','DefectController@chart')->name('defect.chart');
 Route::resource('defect', 'DefectController');
+
+
+Route::get('/chart/mpsactual','MpsActualController@chart')->name('mpsactual.chart');
+Route::resource('mpsactual', 'MpsActualController');
+
