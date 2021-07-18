@@ -293,7 +293,7 @@
                         var ttltargetawal = 0
                         var ttltargetrevisi = 0
                         var ttltargetsd = 0
-                        var ttlactual = 0
+                        var ttlactual =  0
                         var ttlbalance = 0
 
                         data['data'].forEach(element => {

@@ -24,3 +24,5 @@ Route::resource('defect', 'DefectController');
 Route::get('/chart/mpsactual','MpsActualController@chart')->name('mpsactual.chart');
 Route::resource('mpsactual', 'MpsActualController');
 
+Route::get('/maintenance/chart','MaintenanceController@chart')->name('maintenance.chart');
+Route::resource('maintenance', 'MaintenanceController');

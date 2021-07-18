@@ -261,7 +261,7 @@
                         tooltips: {
                         callbacks: {
                             label: function(tooltipItem, data) {
-                                var dataset = data.datasets[tooltipItem.datasetIndex];
+                            var dataset = data.datasets[tooltipItem.datasetIndex];
                             var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
                                 return previousValue + currentValue;
                             });
@@ -386,6 +386,17 @@
 
                                 }
                             }]
+                            },
+                            plugins: {
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'top',
+                                formatter: Math.round,
+                                color: 'white',
+                                font: {
+                                weight: 'bold'
+                                }
+                            }
                             }
                         }
                         });
