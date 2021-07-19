@@ -95,7 +95,6 @@ class MaintenanceController extends Controller
             }
 
             $plant = $request->get('plant');
-            $baris = $request->get('baris');
             $resplan = "";
             foreach ($plant as $key => $value) {
                 $resplan .= $value . ';';
@@ -108,13 +107,13 @@ class MaintenanceController extends Controller
             $B = DB::select(DB::raw("SET NOCOUNT ON ; exec p_mandas_breakdown_menit :Param1, :Param2, :Param3"), [
                 ':Param1' => $periode,
                 ':Param2' => $resplan,
-                ':Param3' => $baris
+                ':Param3' =>'-'
             ]);
 
             $C = DB::select(DB::raw("SET NOCOUNT ON ; exec p_mandas_breakdown_kali :Param1, :Param2, :Param3"), [
                 ':Param1' => $periode,
                 ':Param2' => $resplan,
-                ':Param3' => $baris
+                ':Param3' =>'-'
             ]);
             return response()->json([
                 'A' => $A,

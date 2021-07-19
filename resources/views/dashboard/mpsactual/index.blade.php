@@ -13,6 +13,10 @@
     .dataTables_empty{
         background-color: black !important
     }
+    .margint{
+      margin-top: 130% !important
+    }
+
     .progress {
         background-color: #aaa;
         -webkit-box-shadow: none;
@@ -80,62 +84,74 @@
         <section class="widget">
 
             <div class="body">
-                <table class="table  table-bordered" data-stripe-classes="[]" id="tablereview">
-                    <thead>
-                        <tr>
-                            <th colspan="6" class="text-center" id="threview">REVIEW MPS VS ACTUAL MAY 2021 PLANT 1</th>
-                        </tr>
-                        <tr>
-                            <th style="width: 100% !important">ITEM</th>
-                            <th class="text-center">Target Awal</th>
-                            <th class="text-center">Target Revisi</th>
-                            <th class="text-center" id="thsd">Target s/d 30 May 2021</th>
-                            <th class="text-center" >Actual</th>
-                            <th class="text-center">Balance Target</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table class="table  table-bordered" data-stripe-classes="[]" id="tablereview">
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="text-center" id="threview">REVIEW MPS VS ACTUAL MAY 2021 PLANT 1</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 100% !important">ITEM</th>
+                                <th class="text-center">Target Awal</th>
+                                <th class="text-center">Target Revisi</th>
+                                <th class="text-center" id="thsd">Target s/d 30 May 2021</th>
+                                <th class="text-center" >Actual</th>
+                                <th class="text-center">Balance Target</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                    {{-- <tfoot>
-                        <tr>
-                            <td class="text-center">Total</td>
-                            <td class="text-center" id="ttltargetawal">0</td>
-                            <td class="text-center" id="ttltargetrevisi">0</td>
-                            <td class="text-center" id="ttltargetsd">0</td>
-                            <td class="text-center" id="ttlactual">0</td>
-                            <td class="text-center" id="ttlbalance">0</td>
-                        </tr>
+                        </tbody>
+                        {{-- <tfoot>
+                            <tr>
+                                <td class="text-center">Total</td>
+                                <td class="text-center" id="ttltargetawal">0</td>
+                                <td class="text-center" id="ttltargetrevisi">0</td>
+                                <td class="text-center" id="ttltargetsd">0</td>
+                                <td class="text-center" id="ttlactual">0</td>
+                                <td class="text-center" id="ttlbalance">0</td>
+                            </tr>
 
-                    </tfoot> --}}
-                </table>
+                        </tfoot> --}}
+                    </table>
+                </div>
+
 
             </div>
         </section>
     </div>
     <div class="col-md-6" id="datareview">
         <section class="widget">
-
             <div class="body">
-                <table class="table  table-bordered" data-stripe-classes="[]" id="tableactualdata">
-                    <thead>
-                        <tr>
-                            <th colspan="6" class="text-center" id="threview">REVIEW MPS VS ACTUAL MAY 2021 PLANT 1</th>
-                        </tr>
-                        <tr>
-                            <th style="width: 100% !important">ITEM</th>
-                            <th class="text-center">Target Awal</th>
-                            <th class="text-center">Target Revisi</th>
-                            <th class="text-center" id="thsd">Target s/d 30 May 2021</th>
-                            <th class="text-center" >Actual</th>
-                            <th class="text-center">Balance Target</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <h4 class="text-center" id="textdatareview">REVIEW MPS VS ACTUAL JULY 2021 TOTAL ISP</h4>
+            </div>
+            <div class="body" id="columnrow">
+               {{-- <div class="row" style="background-color: black">
+                   <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4  style="margin-top: 100% !important">Tess</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Target</h4>
+                                <h4 class="text-center margint" >50</h4>
+                            </div>
+                        </div>
 
-                    </tbody>
-
-                </table>
+                   </div>
+                   <div class="col-md-3">
+                            <h4 class="text-center" >Target</h4>
+                            <h4 class="text-center" style="margin-top: 50% !important">50</h4>
+                   </div>
+                   <div class="col-md-3">
+                             <h4 class="text-center">Target</h4>
+                             <h4 class="text-center" style="margin-top: 50% !important">50</h4>
+                   </div>
+                    <div class="col-md-3">
+                        <div style="width: 100%; height: 40px; position: absolute; top: 36%; left: 0; margin-top: 4px; line-height:19px; text-align: center; z-index: 999999999999999"><h4>10%</h4></div>
+                        <canvas id="donut1" width="100" height="100"></canvas>
+                   </div>
+               </div> --}}
 
             </div>
         </section>
@@ -143,6 +159,7 @@
 </div>
 @endsection
 @push('script')
+
     <script>
         $(document).ready(function() {
             $('.tampilan').select2();
@@ -164,6 +181,7 @@
                 processing: true,
                 retrieve: true,
                 paging: false,
+                responsive: true,
                 "rowCallback": function( row, data, index ) {
                     $('td', row).css('background-color', 'Black');
                     $('td:eq(1)',row).addClass('text-center')
@@ -205,6 +223,60 @@
 
             });
             var ctx = document.getElementById("myChart").getContext("2d");
+            var columnrow = $('#columnrow');
+            function addcolumnrow(data)
+            {
+                var content = ""
+                data.forEach(function(result, i) {
+                    content += '<div class="row"  style="background-color: black; margin-top: 1% !important"> <div class="col-md-3"> <div class="row"> <div class="col-md-6"> <h6 style="margin-top: 100% !important">'+result['plant']+'</h6> </div> <div class="col-md-6"> <h4>Target</h4> <h4 class="text-center margint" >'+parseInt(result['targetsd']).toLocaleString()+'</h4> </div> </div> </div> <div class="col-md-3"> <h4 class="text-center" >Actual</h4> <h4 class="text-center" style="margin-top: 50% !important">'+parseInt(result['total']).toLocaleString()+'</h4> </div> <div class="col-md-3"> <h4 class="text-center">Deviasi</h4> <h4 class="text-center" style="margin-top: 50% !important">'+parseInt(result['deviasi']).toLocaleString()+'</h4> </div> <div class="col-md-3"> <div style="width: 100%; height: 40px; position: absolute; top: 36%; left: 0; margin-top: 4px; line-height:19px; text-align: center; z-index: 999999999999999"><h5>'+result['persen']+'%</h5></div> <canvas id="donut'+i+'" style="width: 100px !important; height: 120px !important " ></canvas> </div> </div>'
+                });
+
+                columnrow.html(content)
+                data.forEach(function(result, i) {
+                    var colour = "";
+                    if(parseFloat(result['persen']) < 100){
+                        colour = "#ff1f1f"
+                    }else if(parseFloat(result['persen']) >= 100){
+                        colour = "#1fff2e"
+                    }
+                    chartdonut(i,result['plant'],colour)
+                });
+
+            }
+
+            function chartdonut(i,label,colour){
+                var ctx = document.getElementById("donut"+i);
+                var chartdonut = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [label],
+                    datasets: [{
+                    label: '# of Tomatoes',
+                    data: [12],
+                    backgroundColor: [
+                       colour,
+                    ],
+                    borderColor: [
+                       colour,
+                    ],
+                    borderWidth: 1
+                    }]
+                },
+                options: {
+                    //cutoutPercentage: 40,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display:false
+                    },
+                    plugins: {
+                            datalabels: {
+                                display:false
+                            }
+                        }
+                }
+                });
+            }
 
             function chartvs(labels,data1, data2){
                 var barChartData = {
@@ -295,7 +367,7 @@
                         var ttltargetsd = 0
                         var ttlactual =  0
                         var ttlbalance = 0
-
+                        addcolumnrow(data['actual_total'])
                         data['data'].forEach(element => {
                                 labels.push(element['Keterangan'])
                                 targetsd.push(element['targetsd'])
@@ -317,6 +389,7 @@
                         // $('#ttlactual').text(ttlactual)
                         // $('#ttlbalance').text(ttlbalance)
                         $('#threview').text('REVIEW MPS VS ACTUAL '+data['date']+' '+tampilan)
+                        $('#textdatareview').text('REVIEW MPS VS ACTUAL '+data['date'].toUpperCase()+' '+tampilan)
                         $('#thsd').text('Target s/d '+data['day']+' '+data['date'])
                         $('#datareview').show()
                     }

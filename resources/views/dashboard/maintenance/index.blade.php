@@ -25,7 +25,7 @@
         <section class="widget">
             <form id="formChart">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="pilih" >Tipe Periode</label>
                             <select class="form-control pilih" name="pilih"  id="pilih">
@@ -34,13 +34,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="periode">Periode</label>
                                     <input type="month" class="form-control" id="periode" name="periode">
                                 </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="plant" >Plant</label>
                            <select class="form-control plant" name="plant[]" multiple id="plant">
@@ -51,16 +51,7 @@
                            </select>
                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="baris" >Baris</label>
-                           <select class="form-control baris" name="baris"  id="baris">
-                               <option value="-">-</option>
-                               <option value="all">All</option>
 
-                           </select>
-                       </div>
-                    </div>
                 </div>
               </form>
         </section>
@@ -69,6 +60,15 @@
     <div class="col-md-2 text-center">
         <section class="widget mt-5" style="height: 70px">
         <button type="button" style="margin-top: 10px !important" class="btn btn-lg btn-primary btnsubmit mt-2">Submit</button>
+        </section>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <div class="body no-margin">
+                <h3 class="text-center">Overall Equipment Effecttiveness</h3>
+            </div>
         </section>
     </div>
 </div>
@@ -128,6 +128,7 @@
     <div class="col-md-12">
         <section class="widget">
             <div class="body no-margin">
+                <h3 class="text-center">Machine Output</h3>
               <div class="chart">
                 <canvas id="bar1" class="bar1"  ></canvas>
               </div>
@@ -139,6 +140,7 @@
     <div class="col-md-6">
         <section class="widget">
             <div class="body no-margin">
+                <h3 class="text-center">TOP 5 Breakdown (Hours)</h3>
               <div class="chart">
                 <canvas id="bar2" class="bar2"  ></canvas>
               </div>
@@ -148,6 +150,7 @@
     <div class="col-md-6">
         <section class="widget">
             <div class="body no-margin">
+                <h3 class="text-center">TOP 5 Breakdown (Repeat)</h3>
               <div class="chart">
                 <canvas id="bar3" class="bar3"  ></canvas>
               </div>
@@ -155,6 +158,7 @@
         </section>
     </div>
 </div>
+
 @endsection
 @push('script')
     <script>
@@ -184,9 +188,9 @@
                     }
 
                     content += '<div class="col-md-3" > <section class="widget"><div class="body no-margin"><div class="chart">   <div style="width: 100%; height: 40px; position: absolute; top: 36%; left: 0; margin-top: 4px; line-height:19px; text-align: center; z-index: 999999999999999"><h4>'+parseFloat(result['Oee1']).toFixed(2)+'%</h4></div><canvas width="300"  height="300" id="donut'+i+'" class="donut1"></canvas></div>'
-                    content += '<div class="progress" style="margin-top: 1rem !important" >'+'<div class="progress-bar" role="progressbar" style="width:'+parseFloat(result['Avai']).toFixed(2)+'%;" aria-valuenow="'+parseFloat(result['Avai']).toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+parseFloat(result['Avai']).toFixed(2)+'%</div></div>'
-                    content += '<div class="progress">'+'<div class="progress-bar" role="progressbar" style="width:'+parseFloat(result['Rate']).toFixed(2)+'%;" aria-valuenow="'+parseFloat(result['Rate']).toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+parseFloat(result['Rate']).toFixed(2)+'%</div></div>'
-                    content += '<div class="progress">'+'<div class="progress-bar" role="progressbar" style="width:'+parseFloat(result['Qual']).toFixed(2)+'%;" aria-valuenow="'+parseFloat(result['Qual']).toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+parseFloat(result['Qual']).toFixed(2)+'%</div></div>'
+                    content += '<div class="row"> <div class="col-md-3" style="margin-top:1% !important"> <h6>Available</h6> </div> <div class="col-md-9"> <div class="progress" style="margin-top: 1rem !important" >'+'<div class="progress-bar" role="progressbar" style="width:'+parseFloat(result['Avai']).toFixed(2)+'%;" aria-valuenow="'+parseFloat(result['Avai']).toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+parseFloat(result['Avai']).toFixed(2)+'%</div></div> </div> </div>'
+                    content += '<div class="row"> <div class="col-md-3" style="margin-bottom:2% !important"> <h6>Performance</h6> </div> <div class="col-md-9"> <div class="progress">'+'<div class="progress-bar" role="progressbar" style="width:'+parseFloat(result['Rate']).toFixed(2)+'%;" aria-valuenow="'+parseFloat(result['Rate']).toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+parseFloat(result['Rate']).toFixed(2)+'%</div></div> </div> </div>'
+                    content += '<div class="row"> <div class="col-md-3" style="margin-bottom:2% !important"> <h6>Quality</h6> </div> <div class="col-md-9"> <div class="progress">'+'<div class="progress-bar" role="progressbar" style="width:'+parseFloat(result['Qual']).toFixed(2)+'%;" aria-valuenow="'+parseFloat(result['Qual']).toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+parseFloat(result['Qual']).toFixed(2)+'%</div></div> </div> </div>'
 
                     content += '</div></section></div>'
 
@@ -233,7 +237,8 @@
                         legend:{
                             labels: {
                             fontColor: "white",
-                            fontSize: 16
+                            fontSize: 16,
+                            boxWidth: 0
                         }
                         },
                         responsive: true,
@@ -247,7 +252,7 @@
 
             }
 
-            function bar1(label,data,i){
+            function bar1(label,data,color){
                 var bar1 = document.getElementById('bar1').getContext('2d');
                 var chartbar = new Chart(bar1, {
                     type: 'bar',
@@ -256,8 +261,8 @@
                         datasets: [{
                             label: '# of Votes',
                             data: data,
-                            backgroundColor: "yellow",
-                            borderColor: "blue",
+                            backgroundColor: color,
+                            borderColor: color,
                             borderWidth: 1,
                         }]
                     },
@@ -304,7 +309,7 @@
             }
 
 
-            function bar2(label,data){
+            function bar2(label,data, color){
                 var bar2 = document.getElementById('bar2').getContext('2d');
                 var chartbar2 = new Chart(bar2, {
                     type: 'bar',
@@ -313,12 +318,15 @@
                         datasets: [{
                             label: '# of Votes',
                             data: data,
-                            backgroundColor: "lightblue",
-                            borderColor: "blue",
+                            backgroundColor: color,
+                            borderColor: color,
                             borderWidth: 1,
                         }]
                     },
                     options: {
+                           legend: {
+                                display: false
+                            },
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -353,7 +361,7 @@
                 });
             }
 
-            function bar3(label,data){
+            function bar3(label,data, color){
                 var bar3 = document.getElementById('bar3').getContext('2d');
                 var chartbar3 = new Chart(bar3, {
                     type: 'bar',
@@ -362,12 +370,15 @@
                         datasets: [{
                             label: '# of Votes',
                             data: data,
-                            backgroundColor: "green",
-                            borderColor: "green",
+                            backgroundColor: color,
+                            borderColor: color,
                             borderWidth: 1,
                         }]
                     },
                     options: {
+                           legend: {
+                                display: false
+                            },
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -401,8 +412,15 @@
                     }
                 });
             }
-            // bar2()
-            // bar3()
+
+
+            function generateColour(){
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgb(" + r + "," + g + "," + b + ")";
+            }
+
             $('.btnsubmit').on('click', function(){
                 var form = $('#formChart').serialize()
                 $.ajax({
@@ -416,32 +434,36 @@
                     var kdmesinbar1 = []
                     var totberatbar1 = []
                     var oee1 = []
-
+                    var colorbar1 = []
                     data['A'].forEach(element => {
                         kdmesinbar1.push(element['kodemesin'])
                         totberatbar1.push(element['totberat'])
                         oee1.push(element['Oee1'])
-
+                        colorbar1.push(generateColour())
                     });
 
                     // chart bar 2
                     var kdmesinbar2 = []
                     var jambar2 = []
+                    var colorbar2 = []
                     data['B'].forEach(element => {
                         kdmesinbar2.push(element['kodemesin'])
                         jambar2.push(element['jam'])
+                        colorbar2.push(generateColour())
                     });
 
                     //chart bar 3
                     var kdmesin3 = []
                     var kalibar3 = []
+                    var colorbar3 = []
                     data['C'].forEach(element => {
                         kdmesin3.push(element['kodemesin'])
                         kalibar3.push(element['kali'])
+                        colorbar3.push(generateColour())
                     });
-                    bar1(kdmesinbar1, totberatbar1)
-                    bar2(kdmesinbar2,jambar2)
-                    bar3(kdmesin3,kalibar3)
+                    bar1(kdmesinbar1, totberatbar1,colorbar1)
+                    bar2(kdmesinbar2,jambar2, colorbar2)
+                    bar3(kdmesin3,kalibar3,colorbar3)
 
                 }
             })

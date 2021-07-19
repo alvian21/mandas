@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('defect');
+    return redirect('mpsactual');
 });
 
 Route::get('/defect/chart','DefectController@chart')->name('defect.chart');

@@ -19,7 +19,7 @@
         box-shadow: none;
         }
 </style>
-<h2 class="page-title">Dashboard Defect</h2>
+<h2 class="page-title">Dashboard Quality</h2>
 <div class="row">
     <div class="col-md-10">
         <section class="widget">
@@ -233,12 +233,12 @@
                         label: '# of Tomatoes',
                         data: data2,
                         backgroundColor: [
-                            'rgba(8, 160, 255, 1)',
+                            '#1fff2e',
                             'rgba(255, 8, 8, 1)',
 
                         ],
                         borderColor: [
-                            'rgba(8, 160, 255, 1)',
+                            '#1fff2e',
                             'rgba(255, 8, 8, 1)',
 
                         ],
@@ -249,6 +249,10 @@
                         responsive: true,
                         legend: {
                         position: 'bottom',
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
                         },
                         title: {
                         display: false,
@@ -270,14 +274,27 @@
                             return currentValue + "%";
                             }
                         }
-                        }
+                        },
+                        plugins: {
+                            datalabels: {
+                                formatter: function(value, context) {
+                                return parseFloat(value).toFixed(2) ;
+                                },
+
+                            }
+                        },
                     }
                     });
 
 
             }
 
-
+            function generateColour(){
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgb(" + r + "," + g + "," + b + ")";
+            }
 
             $('.btnsubmit').on('click', function(){
                 var form = $('#formChart').serialize()
@@ -292,6 +309,7 @@
                         var pcs = []
                         var totalpcs = 0
                         var totalpersen = 0
+                        var colordata1 = []
                         data['data1'].forEach(element => {
                                 defect.push(element['defect'])
                                 persen.push(element['persen'])
@@ -299,6 +317,7 @@
 
                                 totalpcs += parseInt(element['pcs'])
                                 totalpersen += element['persen']
+                                colordata1.push(generateColour())
                         });
 
                         var label2 = []
@@ -343,14 +362,7 @@
                             label: 'PCS',
                             yAxisID: 'A',
                             data:pcs,
-                            backgroundColor:[
-                                'rgba(0, 183, 255, 1)',
-                                'rgba(199, 255, 0, 1)',
-                                'rgba(255, 194, 0, 1)',
-                                'rgba(0, 157, 255, 1)',
-                                'rgba(255, 0, 205, 1)',
-                                'rgba(0, 255, 210, 1)'
-                            ],
+                            backgroundColor:colordata1,
 
                             }]
                         },
