@@ -351,6 +351,8 @@
 
             $('.btnsubmit').on('click', function(){
                 var form = $('#formChart').serialize()
+                table.clear().draw();
+
                 $.ajax({
                     url:"{{route('defect.chart')}}",
                     method:"GET",

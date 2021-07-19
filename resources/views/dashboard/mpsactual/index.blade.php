@@ -356,6 +356,8 @@
             $('.btnsubmit').on('click', function(){
                 var form = $('#formChart').serialize()
                 var tampilan = $('#tampilan').find(':selected').text()
+                table.clear().draw();
+
                 $.ajax({
                     url:"{{route('mpsactual.chart')}}",
                     method:"GET",
