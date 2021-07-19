@@ -23,6 +23,7 @@ class MpsActualController extends Controller
                 'tampilan' => ''
             ];
         }
+
         return view("dashboard.mpsactual.index", ['mpsactual' => $mpsactual]);
     }
 

@@ -33,7 +33,6 @@ class DefectController extends Controller
         }
 
         $plant = [1,2,3,4];
-        // dd($defect);
        
         return view("dashboard.defect.index", ['data' => $data, 'data2' => $data2, 'defect' => $defect,'plant'=>$plant]);
     }
