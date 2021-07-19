@@ -361,7 +361,6 @@
                         var labels = []
                         var targetsd = []
                         var actual = []
-                        console.log(data);
                         var ttltargetawal = 0
                         var ttltargetrevisi = 0
                         var ttltargetsd = 0

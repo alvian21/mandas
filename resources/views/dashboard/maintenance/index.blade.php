@@ -428,7 +428,7 @@
                     method:"GET",
                     data:form,
                     success:function(data){
-                        console.log(data);
+                      
                         addcolumnrow(data['A'])
                     // chart bar 1
                     var kdmesinbar1 = []
