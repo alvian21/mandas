@@ -190,6 +190,9 @@
             $('#divgrpmesin').hide();
             $('#output').hide();
             var pilih = $('#pilih').find(':selected').val()
+            var chartbar;
+            var chartbar2;
+            var chartbar3;
             var dataperiode = "{{$maintenance['periode']}}"
             if(pilih == 'bulanan'){
                     $('#periode').prop('type','month')
@@ -299,7 +302,10 @@
 
             function bar1(label,data,color){
                 var bar1 = document.getElementById('bar1').getContext('2d');
-                var chartbar = new Chart(bar1, {
+                if (typeof(chartbar) != "undefined") {
+                    chartbar.destroy();
+                }
+                chartbar = new Chart(bar1, {
                     type: 'bar',
                     data: {
                         labels: label,
@@ -356,7 +362,10 @@
 
             function bar2(label,data, color){
                 var bar2 = document.getElementById('bar2').getContext('2d');
-                var chartbar2 = new Chart(bar2, {
+                if (typeof(chartbar2) != "undefined") {
+                    chartbar2.destroy();
+                }
+                chartbar2 = new Chart(bar2, {
                     type: 'bar',
                     data: {
                         labels: label,
@@ -408,7 +417,10 @@
 
             function bar3(label,data, color){
                 var bar3 = document.getElementById('bar3').getContext('2d');
-                var chartbar3 = new Chart(bar3, {
+                if (typeof(chartbar3) != "undefined") {
+                    chartbar3.destroy();
+                }
+                chartbar3 = new Chart(bar3, {
                     type: 'bar',
                     data: {
                         labels: label,

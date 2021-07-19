@@ -7,7 +7,7 @@
     .select2-selection__choice__display{background-color: black}
     .myChart{
         width: 100%;
-        height:400px
+        height:400px !important;
     }
 
     .dataTables_empty{
@@ -204,6 +204,7 @@
             $('.grpmesin').select2()
             $('#divgrpmesin').hide();
             $('#output').hide();
+            var chartbar;
             var table = $("#tabledefect").DataTable({
                 data:[],
                 columns: [
@@ -403,7 +404,10 @@
                         $('#totalpersen').text(totalpersen.toLocaleString()+"%")
                         $('#output').show();
                         var canvas = document.getElementById('myChart');
-                        new Chart(canvas, {
+                        if (typeof(chartbar) != "undefined") {
+                             chartbar.destroy();
+                        }
+                        chartbar =   new Chart(canvas, {
                         type: 'bar',
                         data: {
                             labels: defect,

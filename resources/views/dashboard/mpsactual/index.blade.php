@@ -7,7 +7,7 @@
     .select2-selection__choice__display{background-color: black}
     .myChart{
         width: 100%;
-        height:500px
+        height:500px !important;
     }
 
     .dataTables_empty{
@@ -163,6 +163,7 @@
     <script>
         $(document).ready(function() {
             $('.tampilan').select2();
+            var chartvsdata;
             // $('#datareview').hide()
             var table = $("#tablereview").DataTable({
                 data:[],
@@ -345,7 +346,7 @@
 
 
 
-                    var chartvs = new Chart(ctx, {
+                     chartvsdata = new Chart(ctx, {
                             type: "bar",
                             data: barChartData,
                          options: chartOptions
@@ -371,6 +372,9 @@
                         var ttltargetsd = 0
                         var ttlactual =  0
                         var ttlbalance = 0
+                        if (typeof(chartvsdata) != "undefined") {
+                             chartvsdata.destroy();
+                        }
                         addcolumnrow(data['actual_total'])
                         data['data'].forEach(element => {
                                 labels.push(element['Keterangan'])
@@ -385,8 +389,7 @@
                         });
 
                         chartvs(labels, targetsd, actual)
-                        table.rows.add(data['data']).draw()
-                        table2.rows.add(data['actual_data']).draw()
+                        table.rows.add(data['actual_data']).draw()
                         // $('#ttltargetawal').text(ttltargetawal)
                         // $('#ttltargetrevisi').text(ttltargetrevisi)
                         // $('#ttltargetsd').text(ttltargetsd)
