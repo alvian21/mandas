@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,24 @@ class DefectController extends Controller
     {
         $data = DB::table('MSMACHINESFC_CTTARGET')->select('MACHINEcode')->orderBy('MACHINEcode')->get();
         $data2 = DB::table('MSMACHINESFC')->select('groupmachine')->distinct()->orderBy('groupmachine')->get();
-        return view("dashboard.defect.index", ['data' => $data, 'data2' => $data2]);
+
+        if (session()->has('defect')) {
+            $defect = session('defect');
+        } else {
+            $defect = [
+                'tipe_periode' => '',
+                'periode' => '',
+                'plant' => [],
+                'tipe_mesin' => '',
+                'kodemesin' => '',
+                'grpmesin' => ''
+            ];
+        }
+
+        $plant = [1,2,3,4];
+        // dd($defect);
+       
+        return view("dashboard.defect.index", ['data' => $data, 'data2' => $data2, 'defect' => $defect,'plant'=>$plant]);
     }
 
     /**
@@ -91,17 +109,29 @@ class DefectController extends Controller
         if ($request->ajax()) {
             $pilih = $request->get('pilih');
             $periode = $request->get('periode');
+            $plant = $request->get('plant');
+            $kodemesin = $request->get('kodemesin');
+            $grpmesin = $request->get('grpmesin');
             if ($pilih == 'bulanan') {
                 $periode = date('Ym', strtotime($periode));
             } else {
                 $periode = date('Ymd', strtotime($periode));
             }
 
-            $plant = $request->get('plant');
-            $kodemesin = $request->get('kodemesin');
-            $grpmesin = $request->get('grpmesin');
+
             $kodemesin = '';
             $resplan = "";
+
+            $sesi = [
+                'tipe_periode' => $pilih,
+                'periode' => $periode,
+                'plant' => $plant,
+                'tipe_mesin' => $request->get('tpmesin'),
+                'kodemesin' => $kodemesin,
+                'grpmesin' => $grpmesin
+            ];
+
+            session(['defect' => $sesi]);
             foreach ($plant as $key => $value) {
                 $resplan .= $value . ';';
             }

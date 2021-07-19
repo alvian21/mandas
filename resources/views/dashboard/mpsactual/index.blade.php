@@ -32,24 +32,24 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="tglawal">Tanggal Awal</label>
-                            <input type="date" class="form-control" id="tglawal" value="{{date('Y-m-01')}}" name="tglawal">
+                            <input type="date" class="form-control" id="tglawal" value="@if($mpsactual['tglawal']==''){{date('Y-m-01')}}@else{{$mpsactual['tglawal']}}@endif" name="tglawal">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="tglakhir">Tanggal Akhir</label>
-                            <input type="date" class="form-control" id="tglakhir" value="{{date('Y-m-d')}}"  name="tglakhir">
+                            <input type="date" class="form-control" id="tglakhir" value="@if($mpsactual['tglakhir']==''){{date('Y-m-d')}}@else{{$mpsactual['tglakhir']}}@endif"  name="tglakhir">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="tampilan" >Tampilan</label>
                            <select class="form-control tampilan" name="tampilan" id="tampilan">
-                               <option value="1">PLANT 1</option>
-                               <option value="2">PLANT 2 ALL</option>
-                               <option value="3">PLANT 2 UNIT 1</option>
-                               <option value="4">PLANT 2 UNIT 2-3</option>
-                               <option value="5">TOTAL ISP</option>
+                               <option value="1" @if($mpsactual['tampilan'] == '1') selected @endif>PLANT 1</option>
+                               <option value="2" @if($mpsactual['tampilan'] == '2') selected @endif>PLANT 2 ALL</option>
+                               <option value="3" @if($mpsactual['tampilan'] == '3') selected @endif>PLANT 2 UNIT 1</option>
+                               <option value="4" @if($mpsactual['tampilan'] == '4') selected @endif>PLANT 2 UNIT 2-3</option>
+                               <option value="5" @if($mpsactual['tampilan'] == '5') selected @endif>TOTAL ISP</option>
                            </select>
                        </div>
                     </div>
@@ -239,25 +239,28 @@
                     }else if(parseFloat(result['persen']) >= 100){
                         colour = "#1fff2e"
                     }
-                    chartdonut(i,result['plant'],colour)
+                    chartdonut(i,result['plant'],colour,parseFloat(result['persen']))
                 });
 
             }
 
-            function chartdonut(i,label,colour){
+            function chartdonut(i,label,colour,data){
                 var ctx = document.getElementById("donut"+i);
+                var resdata = 100 - data;
                 var chartdonut = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: [label],
                     datasets: [{
                     label: '# of Tomatoes',
-                    data: [12],
+                    data: [data,resdata],
                     backgroundColor: [
                        colour,
+                       "rgba(0,0,0,0)"
                     ],
                     borderColor: [
                        colour,
+                       "#ffffff"
                     ],
                     borderWidth: 1
                     }]

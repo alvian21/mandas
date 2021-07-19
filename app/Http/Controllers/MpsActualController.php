@@ -14,7 +14,16 @@ class MpsActualController extends Controller
      */
     public function index()
     {
-        return view("dashboard.mpsactual.index");
+        if (session()->has('mpsactual')) {
+            $mpsactual = session('mpsactual');
+        } else {
+            $mpsactual = [
+                'tglawal' => '',
+                'tglakhir' => '',
+                'tampilan' => ''
+            ];
+        }
+        return view("dashboard.mpsactual.index", ['mpsactual' => $mpsactual]);
     }
 
     /**
@@ -89,6 +98,14 @@ class MpsActualController extends Controller
             $tglawal = $request->get('tglawal');
             $tglakhir = $request->get('tglakhir');
             $tampilan = $request->get('tampilan');
+            $mpsactual = [
+                'tglawal' => $tglawal,
+                'tglakhir' => $tglakhir,
+                'tampilan' => $tampilan
+            ];
+
+            session(['mpsactual' => $mpsactual]);
+
             $data = DB::select(DB::raw("SET NOCOUNT ON ; exec p_mandas_review_mps_vs_actual :Param1, :Param2, :Param3"), [
                 ':Param1' => $tglawal,
                 ':Param2' => $tglakhir,
@@ -106,21 +123,21 @@ class MpsActualController extends Controller
 
             $arr = [];
             foreach ($actualtotal as $key => $value) {
-                    if($value->total == null){
-                        $x['total'] = 0;
-                    }else{
-                        $x['total'] = $value->total;
-                    }
-                    if($value->deviasi == null){
-                        $x['deviasi'] = 0;
-                    }else{
-                        $x['deviasi'] = $value->deviasi;
-                    }
-                    $x['plant'] = $value->plant;
-                    $x['targetsd'] = round($value->targetsd);
-                    $persen = ($x['total'] / $value->targetsd) * 100;
-                    $x['persen'] = round($persen,2);
-                    array_push($arr,$x);
+                if ($value->total == null) {
+                    $x['total'] = 0;
+                } else {
+                    $x['total'] = $value->total;
+                }
+                if ($value->deviasi == null) {
+                    $x['deviasi'] = 0;
+                } else {
+                    $x['deviasi'] = $value->deviasi;
+                }
+                $x['plant'] = $value->plant;
+                $x['targetsd'] = round($value->targetsd);
+                $persen = ($x['total'] / $value->targetsd) * 100;
+                $x['persen'] = round($persen, 2);
+                array_push($arr, $x);
             }
             $actualtotal = $arr;
             $day = date('d', strtotime($tglakhir));

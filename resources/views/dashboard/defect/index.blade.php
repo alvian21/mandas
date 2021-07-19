@@ -31,15 +31,15 @@
                                 <div class="form-group">
                                     <label for="pilih" >Tipe Periode</label>
                                     <select class="form-control pilih" name="pilih"  id="pilih">
-                                        <option value="bulanan">bulanan</option>
-                                        <option value="harian">harian</option>
+                                        <option value="bulanan" @if($defect['tipe_periode'] == 'bulanan') selected @endif>bulanan</option>
+                                        <option value="harian" @if($defect['tipe_periode'] == 'harian') selected @endif>harian</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="periode">Periode</label>
-                                    <input type="month" class="form-control" id="periode" name="periode">
+                                    <input type="month" class="form-control" value="@if($defect['tipe_periode'] == 'bulanan'){{DateTime::createFromFormat('Ym',$defect['periode'])->format('Y-m')}}@elseif($defect['tipe_periode'] == 'harian'){{date('Y-m-d', strtotime($defect['periode']))}} @endif" id="periode" name="periode">
                                 </div>
                             </div>
                         </div>
@@ -50,10 +50,35 @@
                         <div class="form-group">
                             <label for="plant" >Plant</label>
                            <select class="form-control plant" name="plant[]" multiple id="plant">
-                               <option value="1">1</option>
-                               <option value="2">2</option>
+                               @forelse ($plant as $item)
+                               @if(!empty($defect['plant']))
+                               @php
+                                $status = false;
+                               @endphp
+                                @forelse ($defect['plant'] as $row)
+                                     @if ($item==$row)
+                                            @php
+                                                $status = true
+                                            @endphp
+                                     @endif
+                                @empty
+
+                                @endforelse
+                                @if ($status)
+                                <option value="{{$item}}" selected>{{$item}}</option>
+                                @else
+                                <option value="{{$item}}" >{{$item}}</option>
+                                @endif
+                                @else
+                                <option value="{{$item}}">{{$item}}</option>
+                                @endif
+                               @empty
+
+                               @endforelse
+
+                               {{-- <option value="2">2</option>
                                <option value="3">3</option>
-                               <option value="4">4</option>
+                               <option value="4">4</option> --}}
                            </select>
                        </div>
                     </div>
@@ -61,8 +86,8 @@
                         <div class="form-group">
                             <label for="tpmesin" >Tipe Mesin</label>
                            <select class="form-control tpmesin" name="tpmesin"  id="tpmesin">
-                               <option value="kodemesin">Kode Mesin</option>
-                               <option value="grpmesin">Grup Mesin</option>
+                               <option value="kodemesin" @if($defect['tipe_mesin'] == 'kodemesin') selected @endif >Kode Mesin</option>
+                               <option value="grpmesin" @if($defect['tipe_mesin'] == 'grpmesin') selected @endif>Grup Mesin</option>
                            </select>
                        </div>
                     </div>
@@ -72,7 +97,7 @@
                         <select class="form-control kodemesin" name="kodemesin" id="kodemesin">
                             <option value="">Pilih Kode Mesin</option>
                             @forelse ($data as $item)
-                                <option value="{{$item->MACHINEcode}}">{{$item->MACHINEcode}}</option>
+                                <option value="{{$item->MACHINEcode}}" @if($defect['kodemesin'] == $item->MACHINEcode) selected @endif >{{$item->MACHINEcode}}</option>
                             @empty
 
                             @endforelse
@@ -85,7 +110,7 @@
                         <select class="form-control grpmesin" name="grpmesin" id="grpmesin">
                             <option value="">Pilih Grup Mesin</option>
                             @forelse ($data2 as $item)
-                                <option value="{{$item->groupmachine}}">{{$item->groupmachine}}</option>
+                                <option value="{{$item->groupmachine}}" @if($defect['grpmesin'] == $item->groupmachine) selected @endif >{{$item->groupmachine}}</option>
                             @empty
 
                             @endforelse
@@ -199,6 +224,34 @@
                     $('td:eq(1)',row).addClass('text-center')
                 }
             });
+            var dataperiode = "{{$defect['periode']}}"
+            var pilih = $('#pilih').find(':selected').val()
+            var tpmesin = $('#tpmesin').find(':selected').val()
+            if(pilih == 'bulanan'){
+
+                    $('#periode').prop('type','month')
+                    if(dataperiode != ''){
+                        var periode = "@if(DateTime::createFromFormat('Ym',$defect['periode'])){{DateTime::createFromFormat('Ym',$defect['periode'])->format('Y-m')}}@endif";
+                    setTimeout(function(){
+                            $('#periode').val(periode)
+                    },1000)
+                }
+            }else{
+                    $('#periode').prop('type','date')
+                    if(dataperiode != ''){
+                    var periode = "{{date('Y-m-d', strtotime($defect['periode']))}}";
+                    setTimeout(function(){
+                            $('#periode').val(periode)
+                    },1000)
+                }
+            }
+            if(tpmesin == 'kodemesin'){
+                    $('#divgrpmesin').hide();
+                    $('#divkodemesin').show();
+                }else{
+                    $('#divgrpmesin').show();
+                    $('#divkodemesin').hide();
+                }
             $('#pilih').on('change', function(){
                 var pilih = $(this).val()
 

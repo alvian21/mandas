@@ -14,7 +14,18 @@ class MaintenanceController extends Controller
      */
     public function index()
     {
-        return view("dashboard.maintenance.index");
+        $plant = [1, 2, 3, 4];
+        if (session()->has('maintenance')) {
+            $maintenance = session('maintenance');
+        } else {
+            $maintenance = [
+                'tipe_periode' => '',
+                'periode' => '',
+                'plant' => []
+            ];
+        }
+
+        return view("dashboard.maintenance.index", ['plant' => $plant, 'maintenance' => $maintenance]);
     }
 
     /**
@@ -88,13 +99,19 @@ class MaintenanceController extends Controller
         if ($request->ajax()) {
             $pilih = $request->get('pilih');
             $periode = $request->get('periode');
+            $plant = $request->get('plant');
             if ($pilih == 'bulanan') {
                 $periode = date('Ym', strtotime($periode));
             } else {
                 $periode = date('Ymd', strtotime($periode));
             }
 
-            $plant = $request->get('plant');
+            $sesi = [
+                'tipe_periode' => $pilih,
+                'periode' => $periode,
+                'plant' => $plant
+            ];
+            session(['maintenance' => $sesi]);
             $resplan = "";
             foreach ($plant as $key => $value) {
                 $resplan .= $value . ';';
@@ -107,13 +124,13 @@ class MaintenanceController extends Controller
             $B = DB::select(DB::raw("SET NOCOUNT ON ; exec p_mandas_breakdown_menit :Param1, :Param2, :Param3"), [
                 ':Param1' => $periode,
                 ':Param2' => $resplan,
-                ':Param3' =>'-'
+                ':Param3' => '-'
             ]);
 
             $C = DB::select(DB::raw("SET NOCOUNT ON ; exec p_mandas_breakdown_kali :Param1, :Param2, :Param3"), [
                 ':Param1' => $periode,
                 ':Param2' => $resplan,
-                ':Param3' =>'-'
+                ':Param3' => '-'
             ]);
             return response()->json([
                 'A' => $A,

@@ -29,25 +29,46 @@
                         <div class="form-group">
                             <label for="pilih" >Tipe Periode</label>
                             <select class="form-control pilih" name="pilih"  id="pilih">
-                                <option value="bulanan">bulanan</option>
-                                <option value="harian">harian</option>
+                                <option value="bulanan" @if($maintenance['tipe_periode'] == 'bulanan') selected @endif>bulanan</option>
+                                <option value="harian" @if($maintenance['tipe_periode'] == 'harian') selected @endif>harian</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="periode">Periode</label>
-                                    <input type="month" class="form-control" id="periode" name="periode">
+                                    <input type="month" class="form-control" value="@if($maintenance['tipe_periode'] == 'bulanan'){{DateTime::createFromFormat('Ym',$maintenance['periode'])->format('Y-m')}}@elseif($maintenance['tipe_periode'] == 'harian'){{date('Y-m-d', strtotime($maintenance['periode']))}} @endif" id="periode" name="periode">
                                 </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="plant" >Plant</label>
                            <select class="form-control plant" name="plant[]" multiple id="plant">
-                               <option value="1">1</option>
-                               <option value="2">2</option>
-                               <option value="3">3</option>
-                               <option value="4">4</option>
+                            @forelse ($plant as $item)
+                            @if(!empty($maintenance['plant']))
+                            @php
+                             $status = false;
+                            @endphp
+                             @forelse ($maintenance['plant'] as $row)
+                                  @if ($item==$row)
+                                         @php
+                                             $status = true
+                                         @endphp
+                                  @endif
+                             @empty
+
+                             @endforelse
+                             @if ($status)
+                             <option value="{{$item}}" selected>{{$item}}</option>
+                             @else
+                             <option value="{{$item}}" >{{$item}}</option>
+                             @endif
+                             @else
+                             <option value="{{$item}}">{{$item}}</option>
+                             @endif
+                            @empty
+
+                            @endforelse
                            </select>
                        </div>
                     </div>
@@ -168,7 +189,28 @@
             $('.grpmesin').select2()
             $('#divgrpmesin').hide();
             $('#output').hide();
+            var pilih = $('#pilih').find(':selected').val()
+            var dataperiode = "{{$maintenance['periode']}}"
+            if(pilih == 'bulanan'){
+                    $('#periode').prop('type','month')
+                    if(dataperiode != ''){
+                        var periode = "@if(DateTime::createFromFormat('Ym',$maintenance['periode'])){{DateTime::createFromFormat('Ym',$maintenance['periode'])->format('Y-m')}}@endif";
+                    setTimeout(function(){
+                            $('#periode').val(periode)
+                    },1000)
+                }
 
+
+            }else{
+                    $('#periode').prop('type','date')
+                    if(dataperiode != ''){
+                    var periode = "{{date('Y-m-d', strtotime($maintenance['periode']))}}";
+                    setTimeout(function(){
+                            $('#periode').val(periode)
+                    },1000)
+                }
+
+            }
             $('#pilih').on('change', function(){
                 var pilih = $(this).val()
 
@@ -215,17 +257,19 @@
             }
 
             function chartdonut(label,data,i){
-
+                var resdata = 100 - data;
                 var data = {
                     labels: [label],
                     datasets: [
                         {
-                        data:[data],
+                        data:[data,resdata],
                         backgroundColor: [
                             "#36A2EB",
+                            "rgba(0,0,0,0)"
                         ],
                         hoverBackgroundColor: [
                             "#36A2EB",
+                            "rgba(0,0,0,0)"
                         ]
                         }]
                     };
@@ -234,6 +278,7 @@
                     type: 'doughnut',
                     data: data,
                     options: {
+
                         legend:{
                             labels: {
                             fontColor: "white",
@@ -428,7 +473,7 @@
                     method:"GET",
                     data:form,
                     success:function(data){
-                      
+
                         addcolumnrow(data['A'])
                     // chart bar 1
                     var kdmesinbar1 = []
