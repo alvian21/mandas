@@ -481,7 +481,7 @@
                         $('#totaloutputpcs').text(totaloutputpcs.toLocaleString())
                         $('#totaloutput').text(totaloutputpcs.toLocaleString()+" Pcs")
                         $('#totalok').text(parseInt(totalok).toLocaleString()+" Pcs")
-                        $('#totalng').text(totalng.toLocaleString()+" Pcs")
+                        $('#totalng').text(parseInt(totalng).toLocaleString()+" Pcs")
                         $('#totalpersen').text("100%")
                         $('#textng').text(parseFloat(persenng).toFixed(2)+"%")
                         $('#output').show();
@@ -593,7 +593,7 @@
                         var totalok = 0
                         var totalng = 0
                         var persenng =0
-                       
+
                         data['data2'].forEach(element => {
                             label2.push(element['Keterangan'])
                             data2.push(element['persen'])
@@ -614,7 +614,7 @@
                         $('#totaloutputpcs').text(totaloutputpcs.toLocaleString())
                         $('#totaloutput').text(totaloutputpcs.toLocaleString()+" Pcs")
                         $('#totalok').text(parseInt(totalok).toLocaleString()+" Pcs")
-                        $('#totalng').text(totalng.toLocaleString()+" Pcs")
+                        $('#totalng').text(parseInt(totalng).toLocaleString()+" Pcs")
                         $('#totalpersen').text("100%")
                         $('#textng').text(parseFloat(persenng).toFixed(2)+"%")
                         $('#output').show();

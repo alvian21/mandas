@@ -227,7 +227,7 @@
                    targetsd = parseInt(data['targetsd'])
                    Actual = parseInt(data['Actual'])
                    balancetarget = parseInt(data['balancetarget'])
-                    console.log(balancetarget)
+                    // console.log(balancetarget)
                     if(targetawal == 0 && targetrevisi == 0 && targetsd == 0 && Actual == 0 && balancetarget == 0 && data['Keterangan'] == 'NON MSM'){
                         $('td:eq(1)', row).text('')
                         $('td:eq(2)', row).text('')
@@ -421,6 +421,7 @@
                     data: {'klik':'true'},
                     success: function(data) {
                         if(data['status'] =='true'){
+                            var tampilan = $('#tampilan').find(':selected').text()
                             var labels = []
                             var targetsd = []
                             var actual = []
@@ -429,6 +430,7 @@
                             var ttltargetsd = 0
                             var ttlactual = 0
                             var ttlbalance = 0
+                            console.log(data['date']);
                             if (typeof(chartvsdata) != "undefined") {
                                 chartvsdata.destroy();
                             }

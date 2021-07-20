@@ -150,7 +150,7 @@
         <section class="widget">
             <div class="body no-margin">
                 <h3 class="text-center" style="font-weight: bold">MACHINE OUTPUT</h3>
-              <div class="chart">
+              <div class="chart" style="margin-top: 5%">
                 <canvas id="bar1" class="bar1"  ></canvas>
               </div>
             </div>
