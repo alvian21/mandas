@@ -414,6 +414,53 @@
 
             }
 
+
+            $.ajax({
+                    url: "{{ route('mpsactual.chart') }}",
+                    method: "GET",
+                    data: {'klik':'true'},
+                    success: function(data) {
+                        if(data['status'] =='true'){
+                            var labels = []
+                            var targetsd = []
+                            var actual = []
+                            var ttltargetawal = 0
+                            var ttltargetrevisi = 0
+                            var ttltargetsd = 0
+                            var ttlactual = 0
+                            var ttlbalance = 0
+                            if (typeof(chartvsdata) != "undefined") {
+                                chartvsdata.destroy();
+                            }
+                            addcolumnrow(data['actual_total'])
+                            data['data'].forEach(element => {
+                                labels.push(element['Keterangan'])
+                                targetsd.push(element['targetsd'])
+                                actual.push(element['Actual'])
+
+                                ttltargetawal += parseInt(element['targetawal'])
+                                ttltargetrevisi += parseInt(element['targetrevisi'])
+                                ttltargetsd += parseInt(element['targetsd'])
+                                ttlactual += parseInt(element['Actual'])
+                                ttlbalance += parseInt(element['balancetarget'])
+                            });
+
+                            chartvs(labels, targetsd, actual)
+                            table.rows.add(data['actual_data']).draw()
+
+
+                            $('#textdatareview').text('REVIEW MPS VS ACTUAL ' + data['date']
+                                .toUpperCase() + ' ' + 'TOTAL ISP')
+                            $('#textdatabar').text('REVIEW MPS VS ACTUAL ' + data['date']
+                                .toUpperCase() + ' ' + tampilan)
+                            $('#textdatatable').text('REVIEW MPS VS ACTUAL ' + data['date']
+                                .toUpperCase() + ' ' + tampilan)
+                            $('#thsd').text('Target s/d ' + data['day'] + ' ' + data['date'])
+                            $('#datareview').show()
+                        }
+                    }
+                })
+
             $('.btnsubmit').on('click', function() {
                 var form = $('#formChart').serialize()
                 var tampilan = $('#tampilan').find(':selected').text()
@@ -450,11 +497,7 @@
 
                         chartvs(labels, targetsd, actual)
                         table.rows.add(data['actual_data']).draw()
-                        // $('#ttltargetawal').text(ttltargetawal)
-                        // $('#ttltargetrevisi').text(ttltargetrevisi)
-                        // $('#ttltargetsd').text(ttltargetsd)
-                        // $('#ttlactual').text(ttlactual)
-                        // $('#ttlbalance').text(ttlbalance)
+
 
                         $('#textdatareview').text('REVIEW MPS VS ACTUAL ' + data['date']
                             .toUpperCase() + ' ' + 'TOTAL ISP')

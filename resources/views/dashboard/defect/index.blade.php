@@ -431,6 +431,136 @@
                 return "rgb(" + r + "," + g + "," + b + ")";
             }
 
+            $.ajax({
+                    url:"{{route('defect.chart')}}",
+                    method:"GET",
+                    data:{'klik':'true'},
+                    success:function(data){
+
+                    if(data['status'] == 'true'){
+                        var defect = []
+                        var persen = []
+                        var pcs = []
+                        var totalpcs = 0
+                        var totalpersen = 0
+                        var colordata1 = []
+                        data['data1'].forEach(element => {
+                                defect.push(element['defect'])
+                                persen.push(element['persentotal'])
+                                pcs.push(element['pcs'])
+
+                                totalpcs += parseInt(element['pcs'])
+                                totalpersen += element['persen']
+                                colordata1.push(generateColour())
+                        });
+
+                        var label2 = []
+                        var data2 = []
+                        var totaloutputpcs = 0
+                        var totalok = 0
+                        var totalng = 0
+                        var persenng =0
+
+                        data['data2'].forEach(element => {
+                            label2.push(element['Keterangan'])
+                            data2.push(element['persen'])
+                            totaloutputpcs += parseInt(element['Pcs'])
+
+                            if(element['Keterangan'] == "OK"){
+                                totalok = element['Pcs']
+                            }else{
+                                totalng = element['Pcs']
+                                persenng = element['persen']
+                            }
+                        });
+
+                        table.clear().draw();
+                        table.rows.add(data['data1']).draw();
+
+                        $('#totalpcs').text(totalpcs.toLocaleString())
+                        $('#totaloutputpcs').text(totaloutputpcs.toLocaleString())
+                        $('#totaloutput').text(totaloutputpcs.toLocaleString()+" Pcs")
+                        $('#totalok').text(parseInt(totalok).toLocaleString()+" Pcs")
+                        $('#totalng').text(totalng.toLocaleString()+" Pcs")
+                        $('#totalpersen').text("100%")
+                        $('#textng').text(parseFloat(persenng).toFixed(2)+"%")
+                        $('#output').show();
+                        var canvas = document.getElementById('myChart');
+                        if (typeof(chartbar) != "undefined") {
+                             chartbar.destroy();
+                        }
+                        chartbar =   new Chart(canvas, {
+                        type: 'bar',
+                        data: {
+                            labels: defect,
+                            datasets: [ {
+                            label: 'persen',
+                            type: 'line',
+                            yAxisID: 'B',
+                            data: persen,
+                            backgroundColor:'rgba(0, 255, 141, 0.27)',
+                            },{
+                            label: 'PCS',
+                            yAxisID: 'A',
+                            data:pcs,
+                            backgroundColor:colordata1,
+
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                            yAxes: [{
+                                id: 'A',
+                                type: 'linear',
+                                position: 'left',
+                                ticks: {
+                                    fontColor: "white",
+                                    fontSize: 14,
+
+                                }
+                            }, {
+                                id: 'B',
+                                type: 'linear',
+                                position: 'right',
+                                ticks: {
+                                max: 100,
+                                min: 0,
+                                fontColor: "white",
+                                    fontSize: 14,
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    fontColor: "white",
+                                    fontSize: 12,
+
+                                }
+                            }]
+                            },
+                            plugins: {
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'top',
+                                formatter: Math.round,
+                                color: 'white',
+                                font: {
+                                weight: 'bold'
+                                }
+                            }
+                            }
+                        }
+                        });
+
+
+                         loadScript(label2, data2)
+                    }
+                }
+            })
+
             $('.btnsubmit').on('click', function(){
                 var form = $('#formChart').serialize()
                 table.clear().draw();
@@ -463,7 +593,7 @@
                         var totalok = 0
                         var totalng = 0
                         var persenng =0
-                        console.log(data)
+                       
                         data['data2'].forEach(element => {
                             label2.push(element['Keterangan'])
                             data2.push(element['persen'])
@@ -476,7 +606,7 @@
                                 persenng = element['persen']
                             }
                         });
-                        console.log(persen);
+
                         table.clear().draw();
                         table.rows.add(data['data1']).draw();
 

@@ -111,24 +111,37 @@ class DefectController extends Controller
             $plant = $request->get('plant');
             $kodemesin = $request->get('kodemesin');
             $grpmesin = $request->get('grpmesin');
+
             if ($pilih == 'bulanan') {
                 $periode = date('Ym', strtotime($periode));
             } else {
                 $periode = date('Ymd', strtotime($periode));
             }
 
-
+            $tpmesin =$request->get('tpmesin');
+            if(session()->has('defect')  && $request->get('klik') == 'true'){
+                $datasesi = session('defect');
+                $pilih = $datasesi['tipe_periode'];
+                $periode = $datasesi['periode'];
+                $plant = $datasesi['plant'];
+                $kodemesin = $datasesi['kodemesin'];
+                $grpmesin = $datasesi['grpmesin'];
+                $tpmesin = $datasesi['tipe_mesin'];
+            }
             $kodemesin = '';
+
             $resplan = "";
 
             $sesi = [
                 'tipe_periode' => $pilih,
                 'periode' => $periode,
                 'plant' => $plant,
-                'tipe_mesin' => $request->get('tpmesin'),
+                'tipe_mesin' => $tpmesin,
                 'kodemesin' => $kodemesin,
                 'grpmesin' => $grpmesin
             ];
+
+
 
             session(['defect' => $sesi]);
             foreach ($plant as $key => $value) {
@@ -159,8 +172,10 @@ class DefectController extends Controller
 
             $data1 = $arr;
             return response()->json([
+                'status' => 'true',
                 'data1' => $data1,
-                'data2' => $data2
+                'data2' => $data2,
+                'periode' => $periode
             ]);
         }
     }

@@ -478,6 +478,52 @@
                 return "rgb(" + r + "," + g + "," + b + ")";
             }
 
+            $.ajax({
+                    url:"{{route('maintenance.chart')}}",
+                    method:"GET",
+                    data:{'klik':'true'},
+                    success:function(data){
+
+                        if(data['status'] == 'true'){
+                            addcolumnrow(data['A'])
+                            // chart bar 1
+                            var kdmesinbar1 = []
+                            var totberatbar1 = []
+                            var oee1 = []
+                            var colorbar1 = []
+                            data['A'].forEach(element => {
+                                kdmesinbar1.push(element['kodemesin'])
+                                totberatbar1.push(element['totberat'])
+                                oee1.push(element['Oee1'])
+                                colorbar1.push(generateColour())
+                            });
+
+                            // chart bar 2
+                            var kdmesinbar2 = []
+                            var jambar2 = []
+                            var colorbar2 = []
+                            data['B'].forEach(element => {
+                                kdmesinbar2.push(element['kodemesin'])
+                                jambar2.push(element['jam'])
+                                colorbar2.push(generateColour())
+                            });
+
+                            //chart bar 3
+                            var kdmesin3 = []
+                            var kalibar3 = []
+                            var colorbar3 = []
+                            data['C'].forEach(element => {
+                                kdmesin3.push(element['kodemesin'])
+                                kalibar3.push(element['kali'])
+                                colorbar3.push(generateColour())
+                            });
+                            bar1(kdmesinbar1, totberatbar1,colorbar1)
+                            bar2(kdmesinbar2,jambar2, colorbar2)
+                            bar3(kdmesin3,kalibar3,colorbar3)
+                        }
+
+                }
+            })
             $('.btnsubmit').on('click', function(){
                 var form = $('#formChart').serialize()
                 $.ajax({

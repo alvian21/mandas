@@ -106,6 +106,13 @@ class MaintenanceController extends Controller
                 $periode = date('Ymd', strtotime($periode));
             }
 
+            if(session()->has('maintenance')  && $request->get('klik') == 'true'){
+                $datasesi = session('maintenance');
+                $pilih = $datasesi['tipe_periode'];
+                $periode = $datasesi['periode'];
+                $plant = $datasesi['plant'];
+            }
+
             $sesi = [
                 'tipe_periode' => $pilih,
                 'periode' => $periode,
@@ -133,6 +140,7 @@ class MaintenanceController extends Controller
                 ':Param3' => '-'
             ]);
             return response()->json([
+                'status' => 'true',
                 'A' => $A,
                 'B' => $B,
                 'C' => $C

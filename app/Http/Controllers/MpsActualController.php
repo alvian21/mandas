@@ -99,6 +99,12 @@ class MpsActualController extends Controller
             $tglawal = $request->get('tglawal');
             $tglakhir = $request->get('tglakhir');
             $tampilan = $request->get('tampilan');
+            if(session()->has('mpsactual')  && $request->get('klik') == 'true'){
+                $datasesi = session('mpsactual');
+                $tglawal = $datasesi['tglawal'];
+                $tglakhir = $datasesi['tglakhir'];
+                $tampilan = $datasesi['tampilan'];
+            }
             $mpsactual = [
                 'tglawal' => $tglawal,
                 'tglakhir' => $tglakhir,
@@ -145,6 +151,7 @@ class MpsActualController extends Controller
             $date = date('F Y', strtotime($tglakhir));
 
             return response()->json([
+                'status' =>'true',
                 'data' => $data,
                 'day' => $day,
                 'date' => $date,
