@@ -33,7 +33,7 @@ class DefectController extends Controller
         }
 
         $plant = [1,2,3,4];
-       
+
         return view("dashboard.defect.index", ['data' => $data, 'data2' => $data2, 'defect' => $defect,'plant'=>$plant]);
     }
 
@@ -153,6 +153,7 @@ class DefectController extends Controller
                 $x['defect'] = $value->defect;
                 $x['pcs'] = $value->pcs;
                 $x['persen'] = round($value->persen, 2);
+                $x['persentotal'] = $value->persentotal;
                 array_push($arr, $x);
             }
 

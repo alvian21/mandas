@@ -6,8 +6,8 @@
     .select2-results { background-color: black; }
     .select2-selection__choice__display{background-color: black}
     .myChart{
-        width: 100%;
-        height:400px !important;
+        width: 118% !important;
+        height:500px  !important;
     }
 
     .dataTables_empty{
@@ -18,8 +18,52 @@
         -webkit-box-shadow: none;
         box-shadow: none;
         }
+        .vertical-center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        }
+        .vertical-center-right {
+        margin: 0;
+        position: relative;
+        top: 50% !important;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        }
+    .verticaltext_content {
+     -webkit-transform: rotate(-90deg);
+     -moz-transform: rotate(-90deg);
+     -ms-transform: rotate(-90deg);
+     -o-transform: rotate(-90deg);
+     /* filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); */
+     left: -40px;
+     /* top: 35px; */
+     position: absolute;
+     color: #FFF;
+     text-transform: uppercase;
+     /* font-size: 26px; */
+     font-weight: bold;
+ }
+
+ .verticaltext_content_right {
+     -webkit-transform: rotate(-90deg);
+     -moz-transform: rotate(-90deg);
+     -ms-transform: rotate(-90deg);
+     -o-transform: rotate(-90deg);
+     /* filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); */
+     left: 120%;
+     top: 220px;
+     text-align: right;
+     position: absolute;
+     color: #FFF;
+     text-transform: uppercase;
+     /* font-size: 26px; */
+     font-weight: bold;
+ }
 </style>
-<h2 class="page-title">Dashboard Quality</h2>
+<h2 class="page-title">DASHBOARD | QUALITY</h2>
 <div class="row">
     <div class="col-md-10">
         <section class="widget">
@@ -135,9 +179,21 @@
         <section class="widget">
 
             <div class="body no-margin">
-              <div class="chart">
-                <canvas id="myChart" class="myChart"  ></canvas>
-              </div>
+                <h4 class="text-center" style="font-weight: bold" id="textdatabar" >TOP 5 DEFECT</h4>
+               <div class="row">
+                   <div class="col-md-1 vertical-center ">
+                    <h4 class="verticaltext_content">QUANTITY(Pcs)</h4>
+                   </div>
+                   <div class="col-md-10">
+
+                    <div class="chart" style="margin-left: 2%">
+                      <canvas id="myChart" class="myChart"  ></canvas>
+                    </div>
+                   </div>
+                   <div class="col-md-1 vertical-center-right">
+                    <h4 class="verticaltext_content_right" >CUMULATIF(%)</h4>
+                   </div>
+               </div>
 
             </div>
         </section>
@@ -150,12 +206,37 @@
 
             <div class="body no-margin">
               <div class="chart">
+                <div style="width: 100%; height: 40px; position: absolute; top: 27%; left: 0; margin-top: 4px; line-height:19px; text-align: center; z-index: 999999999999999"><h1 style="color: red; font-weight: bold" id="textng"></h1></div>
                 <canvas id="pieChart" width="400"  height="440" ></canvas>
               </div>
               <div id="output">
-                  <h4 class="text-center" id="totaloutput">Total Output = 0</h4>
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <table class="table table-responsive">
+                                <tbody>
+                                  <tr>
+                                      <td><h4 style="color: white; font-weight:bold">Total Output</h4></td>
+                                      <td><h4 style="color: white; font-weight:bold" >:</h4></td>
+                                      <td><h4  style="color: white; font-weight:bold" id="totaloutput" class="text-right">0</h4></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h4 style="color: white; font-weight:bold" >Total OK</h4></td>
+                                      <td><h4 style="color: white; font-weight:bold" >:</h4></td>
+                                      <td><h4  style="color: white; font-weight:bold" id="totalok" class="text-right">0</h4></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h4 style="color: white; font-weight:bold" >Total NG</h4></td>
+                                      <td><h4 style="color: white; font-weight:bold" >:</h4></td>
+                                      <td><h4 style="color: white; font-weight:bold"   id="totalng" class="text-right">0</h4></td>
+                                  </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                  {{-- <h4 class="text-center" id="totaloutput">Total Output = 0</h4>
                   <h4 class="text-center" id="totalok">Total OK = 0</h4>
-                  <h4 class="text-center" id="totalng">Total NG = 0</h4>
+                  <h4 class="text-center" id="totalng">Total NG = 0</h4> --}}
               </div>
             </div>
         </section>
@@ -331,9 +412,9 @@
                         },
                         plugins: {
                             datalabels: {
-                                formatter: function(value, context) {
-                                return parseFloat(value).toFixed(2) ;
-                                },
+                              labels:{
+                                  display:false
+                              }
 
                             }
                         },
@@ -368,7 +449,7 @@
                         var colordata1 = []
                         data['data1'].forEach(element => {
                                 defect.push(element['defect'])
-                                persen.push(element['persen'])
+                                persen.push(element['persentotal'])
                                 pcs.push(element['pcs'])
 
                                 totalpcs += parseInt(element['pcs'])
@@ -381,6 +462,8 @@
                         var totaloutputpcs = 0
                         var totalok = 0
                         var totalng = 0
+                        var persenng =0
+                        console.log(data)
                         data['data2'].forEach(element => {
                             label2.push(element['Keterangan'])
                             data2.push(element['persen'])
@@ -390,18 +473,20 @@
                                 totalok = element['Pcs']
                             }else{
                                 totalng = element['Pcs']
+                                persenng = element['persen']
                             }
                         });
-
+                        console.log(persen);
                         table.clear().draw();
                         table.rows.add(data['data1']).draw();
 
                         $('#totalpcs').text(totalpcs.toLocaleString())
                         $('#totaloutputpcs').text(totaloutputpcs.toLocaleString())
-                        $('#totaloutput').text("Total Output = "+totaloutputpcs.toLocaleString())
-                        $('#totalok').text("Total OK = "+parseInt(totalok).toLocaleString())
-                        $('#totalng').text("Total NG = "+totalng.toLocaleString())
-                        $('#totalpersen').text(totalpersen.toLocaleString()+"%")
+                        $('#totaloutput').text(totaloutputpcs.toLocaleString()+" Pcs")
+                        $('#totalok').text(parseInt(totalok).toLocaleString()+" Pcs")
+                        $('#totalng').text(totalng.toLocaleString()+" Pcs")
+                        $('#totalpersen').text("100%")
+                        $('#textng').text(parseFloat(persenng).toFixed(2)+"%")
                         $('#output').show();
                         var canvas = document.getElementById('myChart');
                         if (typeof(chartbar) != "undefined") {
@@ -426,6 +511,7 @@
                             }]
                         },
                         options: {
+                            responsive: true,
                             legend: {
                                 display: false
                             },
@@ -436,7 +522,7 @@
                                 position: 'left',
                                 ticks: {
                                     fontColor: "white",
-                                    fontSize: 18,
+                                    fontSize: 14,
 
                                 }
                             }, {
@@ -447,13 +533,13 @@
                                 max: 100,
                                 min: 0,
                                 fontColor: "white",
-                                    fontSize: 18,
+                                    fontSize: 14,
                                 }
                             }],
                             xAxes: [{
                                 ticks: {
                                     fontColor: "white",
-                                    fontSize: 14,
+                                    fontSize: 12,
 
                                 }
                             }]

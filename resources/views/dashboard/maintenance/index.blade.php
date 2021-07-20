@@ -19,7 +19,7 @@
         box-shadow: none;
     }
 </style>
-<h2 class="page-title">Dashboard Maintenance</h2>
+<h2 class="page-title">DASHBOARD | MAINTENANCE</h2>
 <div class="row">
     <div class="col-md-10">
         <section class="widget">
@@ -88,7 +88,7 @@
     <div class="col-md-12">
         <section class="widget">
             <div class="body no-margin">
-                <h3 class="text-center">Overall Equipment Effecttiveness</h3>
+                <h3 class="text-center"  style="font-weight: bold">OVERALL EQUIPMENT EFFECTIVENESS</h3>
             </div>
         </section>
     </div>
@@ -149,7 +149,7 @@
     <div class="col-md-12">
         <section class="widget">
             <div class="body no-margin">
-                <h3 class="text-center">Machine Output</h3>
+                <h3 class="text-center" style="font-weight: bold">MACHINE OUTPUT</h3>
               <div class="chart">
                 <canvas id="bar1" class="bar1"  ></canvas>
               </div>
@@ -161,7 +161,7 @@
     <div class="col-md-6">
         <section class="widget">
             <div class="body no-margin">
-                <h3 class="text-center">TOP 5 Breakdown (Hours)</h3>
+                <h3 class="text-center" style="font-weight: bold">TOP 5 BREAKDOWN (Hours)</h3>
               <div class="chart">
                 <canvas id="bar2" class="bar2"  ></canvas>
               </div>
@@ -171,7 +171,7 @@
     <div class="col-md-6">
         <section class="widget">
             <div class="body no-margin">
-                <h3 class="text-center">TOP 5 Breakdown (Repeat)</h3>
+                <h3 class="text-center" style="font-weight: bold">TOP 5 BREAKDOWN (Repeat)</h3>
               <div class="chart">
                 <canvas id="bar3" class="bar3"  ></canvas>
               </div>
